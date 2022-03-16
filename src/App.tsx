@@ -9,13 +9,15 @@ function App() {
     <div className="App">
       Baby Names (live coded)
 
-      {allBabyNames.map(nameInfo => (
-        <div
-          className={"babyName " + nameInfo.sex}
-          key={nameInfo.id}
-        >{nameInfo.sex} - {nameInfo.name}</div>
-      )
-      )}
+      <div className="babyNamesList">
+        {allBabyNames.map(nameInfo => (
+          <div
+            className={"babyName " + nameInfo.sex}
+            key={nameInfo.id}
+          >{nameInfo.name}</div>
+        )
+        )}
+      </div>
     </div>
   );
 }

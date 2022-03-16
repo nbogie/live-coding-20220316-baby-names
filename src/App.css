@@ -5,7 +5,7 @@
 .babyName {
   border: 1px solid black;
   border-radius: 5px;
-  padding: 2px;
+  padding: 5px;
   margin: 2px;
 }
 
@@ -15,4 +15,11 @@
 }
 .f {
   background: gray;
+}
+
+.babyNamesList {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
