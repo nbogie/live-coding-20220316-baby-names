@@ -9,11 +9,11 @@
   margin: 2px;
 }
 
-.m {
+.babyName.m {
   background: black;
   color: white;
 }
-.f {
+.babyName.f {
   background: gray;
 }
 
