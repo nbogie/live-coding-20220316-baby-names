@@ -1,22 +1,8 @@
 import React from 'react';
 import './App.css';
+import { BabyNameInfo } from './types';
+import { compareTwoBabyNameInfos } from './BabyNameUtils';
 import allBabyNames from './data/babyNames.json';
-
-interface BabyNameInfo {
-  name: string;
-  id: number;
-  sex: string;
-}
-
-function compareTwoBabyNameInfos(infoA: BabyNameInfo, infoB: BabyNameInfo) {
-  if (infoA.name < infoB.name) {
-    return -1;
-  } else if (infoA.name > infoB.name) {
-    return 1;
-  } else {
-    return 0;
-  }
-}
 
 function App() {
   const sortedBabyNames: BabyNameInfo[] = [...allBabyNames];
