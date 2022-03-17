@@ -3,7 +3,7 @@ import './App.css';
 import { BabyNameInfo } from './types';
 import { compareTwoBabyNameInfos } from './BabyNameUtils';
 import allBabyNames from './data/babyNames.json';
-import { BabyName } from './BabyName';
+import { MainBabyNamesList } from './MainBabyNamesList';
 
 function App() {
   const sortedBabyNames: BabyNameInfo[] = [...allBabyNames];
@@ -35,14 +35,8 @@ function App() {
 
       Now showing {namesToShow.length} names out of {sortedBabyNames.length} possible names.
 
-      <div className="babyNamesList">
-        {namesToShow.map(nameInfo => (
-          <BabyName nameInfo={nameInfo} key={nameInfo.id} />
-        )
-        )}
-      </div>
+      <MainBabyNamesList nameInfos={namesToShow} />
     </div>
   );
 }
-
 export default App;
