@@ -8,6 +8,9 @@ function App() {
   const sortedBabyNames: BabyNameInfo[] = [...allBabyNames];
   sortedBabyNames.sort(compareTwoBabyNameInfos);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [favouriteNames, setFavouriteNames] = useState<BabyNameInfo[]>([]);
+  console.log("App() is running again.", { favouriteNames })
   const namesToShow: BabyNameInfo[] = sortedBabyNames.filter(doesSearchTermOccurInName);
 
   function handleSearchTermChanged(event: any) {
@@ -18,8 +21,26 @@ function App() {
     return nameInfo.name.toLowerCase().includes(searchTerm.toLowerCase());
   }
 
-  return (
+  function isInFavouriteNamesList(target: BabyNameInfo) {
+    return favouriteNames.find(el => el.id === target.id) !== undefined;
+  }
 
+  function handleNameClick(nameInfo: BabyNameInfo) {
+    if (isInFavouriteNamesList(nameInfo)) {
+      //do nothing
+      console.log("Name is already in list", nameInfo.name)
+    } else {
+      const newFavouriteNames = [...favouriteNames, nameInfo];
+      setFavouriteNames(newFavouriteNames);
+    }
+  }
+
+  function handleClickOfNameInFavourites(nameInfoToRemove: BabyNameInfo) {
+    const newList = favouriteNames.filter(el => el.id !== nameInfoToRemove.id);
+    setFavouriteNames(newList);
+  }
+
+  return (
     <div className="App">
       Baby Names (live coded)
 
@@ -32,6 +53,19 @@ function App() {
 
       <hr />
 
+      <h2>Favourite Names</h2>
+      ({favouriteNames.length}) so far: {favouriteNames.map(el => el.name).join(", ")}
+
+      <div className="babyNamesList">
+        {favouriteNames.map(nameInfo => (
+          <div
+            className={"babyName " + nameInfo.sex}
+            key={nameInfo.id}
+            onClick={() => handleClickOfNameInFavourites(nameInfo)}
+          >{nameInfo.name}</div>
+        ))}
+      </div>
+      <hr />
       Now showing {namesToShow.length} names out of {sortedBabyNames.length} possible names.
 
       <div className="babyNamesList">
@@ -39,7 +73,9 @@ function App() {
           <div
             className={"babyName " + nameInfo.sex}
             key={nameInfo.id}
-          >{nameInfo.name}</div>
+            onClick={() => handleNameClick(nameInfo)}
+          >{nameInfo.name}
+          </div>
         )
         )}
       </div>
