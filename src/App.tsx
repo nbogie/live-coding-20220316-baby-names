@@ -11,7 +11,9 @@ function App() {
 
   const [favouriteNames, setFavouriteNames] = useState<BabyNameInfo[]>([]);
   console.log("App() is running again.", { favouriteNames })
-  const namesToShow: BabyNameInfo[] = sortedBabyNames.filter(doesSearchTermOccurInName);
+  const mainListOfNamesToShow: BabyNameInfo[] = sortedBabyNames
+    .filter(doesSearchTermOccurInName)
+    .filter(doesNotExistInFavourites);
 
   function handleSearchTermChanged(event: any) {
     setSearchTerm(event.target.value);
@@ -19,6 +21,12 @@ function App() {
 
   function doesSearchTermOccurInName(nameInfo: BabyNameInfo): boolean {
     return nameInfo.name.toLowerCase().includes(searchTerm.toLowerCase());
+  }
+  function doesNotExistInFavourites(soughtNameInfo: BabyNameInfo) {
+    //return truth of soughtNameInfo does not exist in favouriteNames
+    const found = favouriteNames.find(element => element.id === soughtNameInfo.id);
+    return found === undefined;
+
   }
 
   function isInFavouriteNamesList(target: BabyNameInfo) {
@@ -66,10 +74,12 @@ function App() {
         ))}
       </div>
       <hr />
-      Now showing {namesToShow.length} names out of {sortedBabyNames.length} possible names.
+      <h2>Main List (not favourites)</h2>
+
+      Now showing {mainListOfNamesToShow.length} names out of {sortedBabyNames.length} possible names.
 
       <div className="babyNamesList">
-        {namesToShow.map(nameInfo => (
+        {mainListOfNamesToShow.map(nameInfo => (
           <div
             className={"babyName " + nameInfo.sex}
             key={nameInfo.id}
