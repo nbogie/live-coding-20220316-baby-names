@@ -4,6 +4,7 @@ import { BabyNameInfo } from './types';
 import MainList from './MainList';
 import { compareTwoBabyNameInfos } from './BabyNameUtils';
 import allBabyNames from './data/babyNames.json';
+import SearchBar from './SearchBar';
 
 function App() {
   const sortedBabyNames: BabyNameInfo[] = [...allBabyNames];
@@ -12,12 +13,13 @@ function App() {
 
   const [favouriteNames, setFavouriteNames] = useState<BabyNameInfo[]>([]);
   console.log("App() is running again.", { favouriteNames })
+
   const mainListOfNamesToShow: BabyNameInfo[] = sortedBabyNames
     .filter(doesSearchTermOccurInName)
     .filter(doesNotExistInFavourites);
 
-  function handleSearchTermChanged(event: any) {
-    setSearchTerm(event.target.value);
+  function handleSearchTermChanged(text: string) {
+    setSearchTerm(text);
   }
 
   function doesSearchTermOccurInName(nameInfo: BabyNameInfo): boolean {
@@ -53,12 +55,7 @@ function App() {
     <div className="App">
       Baby Names (live coded)
 
-      <input
-        placeholder="Type your search"
-        value={searchTerm}
-        onChange={handleSearchTermChanged}
-      />
-      You are searching for {searchTerm}
+      <SearchBar searchTerm={searchTerm} handleSearchTermChanged={handleSearchTermChanged} />
 
       <hr />
 
@@ -83,5 +80,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
