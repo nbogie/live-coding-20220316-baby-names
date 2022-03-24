@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { BabyNameInfo } from './types';
+import MainList from './MainList';
 import { compareTwoBabyNameInfos } from './BabyNameUtils';
 import allBabyNames from './data/babyNames.json';
 
@@ -33,7 +34,7 @@ function App() {
     return favouriteNames.find(el => el.id === target.id) !== undefined;
   }
 
-  function handleNameClick(nameInfo: BabyNameInfo) {
+  function handleNameClickInMainList(nameInfo: BabyNameInfo) {
     if (isInFavouriteNamesList(nameInfo)) {
       //do nothing
       console.log("Name is already in list", nameInfo.name)
@@ -74,21 +75,11 @@ function App() {
         ))}
       </div>
       <hr />
-      <h2>Main List (not favourites)</h2>
-
-      Now showing {mainListOfNamesToShow.length} names out of {sortedBabyNames.length} possible names.
-
-      <div className="babyNamesList">
-        {mainListOfNamesToShow.map(nameInfo => (
-          <div
-            className={"babyName " + nameInfo.sex}
-            key={nameInfo.id}
-            onClick={() => handleNameClick(nameInfo)}
-          >{nameInfo.name}
-          </div>
-        )
-        )}
-      </div>
+      <MainList
+        list={mainListOfNamesToShow}
+        fullNameCount={mainListOfNamesToShow.length}
+        handleNameClick={handleNameClickInMainList}
+      />
     </div>
   );
 }
